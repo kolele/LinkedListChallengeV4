@@ -54,9 +54,10 @@ public class Main {
         ListIterator<Song> listIterator = playList.listIterator();
         displayMenu();
         boolean quit = false;
-        int choice = scanner.nextInt();
-        //scanner.nextLine();
+
         while (!quit){
+            int choice = scanner.nextInt();
+            scanner.nextLine();
             switch (choice){
                 case 0:
                     displayMenu();
@@ -64,10 +65,16 @@ public class Main {
                 case 1:
                     if (listIterator.hasNext()){
                         System.out.println("Now playing " + listIterator.next().toString());
-                        break;
+                    }else {
+                        System.out.println("Reached end of playlist");
                     }
+                    break;
                 case 2:
-                    System.out.println("Now playing " + listIterator.previous().toString());
+                    if (listIterator.hasPrevious()){
+                        System.out.println("Now playing " + listIterator.previous().toString());
+                    }else {
+                        System.out.println("Reached start of playlist");
+                    }
                     break;
                 case 3:
                     if (listIterator.hasPrevious()){
@@ -81,6 +88,7 @@ public class Main {
                     listSongs(playList);
                     break;
                 case 5:
+                    System.out.println("Removed last played song");
                     listIterator.remove();
                     break;
                 case 6:
@@ -105,7 +113,25 @@ public class Main {
     private static void listSongs(LinkedList<Song> playList){
         ListIterator<Song> listIterator = playList.listIterator();
         while (listIterator.hasNext()){
-            System.out.println(listIterator.next().toString());
+            System.out.println(listIterator.next());
+        }
+    }
+
+    private static void playNextSong(LinkedList<Song> playList){
+        ListIterator<Song> listIterator = playList.listIterator();
+        if (listIterator.hasNext()){
+            System.out.println("Now playing " + listIterator.next().toString());
+        }else {
+            System.out.println("Reached end of playlist");
+        }
+    }
+
+    private static void playPreviousSong(LinkedList<Song> playList){
+        ListIterator<Song> listIterator = playList.listIterator();
+        if (listIterator.hasPrevious()){
+            System.out.println("Now playing " + listIterator.previous().toString());
+        }else {
+            System.out.println("Reached start of playlist");
         }
     }
 }
