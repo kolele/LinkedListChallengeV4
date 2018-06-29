@@ -54,6 +54,7 @@ public class Main {
         ListIterator<Song> listIterator = playList.listIterator();
         displayMenu();
         boolean quit = false;
+        boolean goingForward = true;
 
         while (!quit){
             int choice = scanner.nextInt();
@@ -63,6 +64,12 @@ public class Main {
                     displayMenu();
                     break;
                 case 1:
+                    if (!goingForward){
+                        if (listIterator.hasNext()){
+                            listIterator.next();
+                        }
+                        goingForward=true;
+                    }
                     if (listIterator.hasNext()){
                         System.out.println("Now playing " + listIterator.next().toString());
                     }else {
@@ -70,6 +77,12 @@ public class Main {
                     }
                     break;
                 case 2:
+                    if (goingForward){
+                        if (listIterator.hasPrevious()){
+                            listIterator.previous();
+                        }
+                        goingForward=false;
+                    }
                     if (listIterator.hasPrevious()){
                         System.out.println("Now playing " + listIterator.previous().toString());
                     }else {
@@ -81,7 +94,7 @@ public class Main {
                         listIterator.previous();
                         System.out.println("Replaying song " + listIterator.next().toString());
                     }else {
-                        System.out.println("Reached end of the list");
+                        System.out.println("KOBAS");
                     }
                     break;
                 case 4:
@@ -90,6 +103,11 @@ public class Main {
                 case 5:
                     System.out.println("Removed last played song");
                     listIterator.remove();
+                    if (listIterator.hasNext()){
+                        System.out.println("Now playing " + listIterator.next());
+                    } else if (listIterator.hasPrevious()){
+                        System.out.println("Now playing " + listIterator.previous());
+                    }
                     break;
                 case 6:
                     System.out.println("Quitting player");
